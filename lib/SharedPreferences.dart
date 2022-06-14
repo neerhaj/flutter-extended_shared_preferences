@@ -140,8 +140,10 @@ class SharedPreferences {
   /// Use this method to observe modifications that were made in native code
   /// (without using the plugin) while the app is running.
   Future<void> reload() async {
-    final Map<String, Object> preferences = await (_store.getAll(filename) as Future<Map<String, Object>>);
+    final Map<String, Object>? preferences = await (_store.getAll(filename));
     _preferenceCache.clear();
-    _preferenceCache.addAll(preferences);
+    if (preferences != null){
+      _preferenceCache.addAll(preferences);
+    }
   }
 }

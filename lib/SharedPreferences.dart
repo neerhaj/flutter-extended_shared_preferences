@@ -54,24 +54,24 @@ class SharedPreferences {
 
   /// Reads a value from persistent storage, throwing an exception if it's not a
   /// bool.
-  bool getBool(String key) => _preferenceCache[key];
+  bool? getBool(String key) => _preferenceCache[key] as bool?;
 
   /// Reads a value from persistent storage, throwing an exception if it's not
   /// an int.
-  int getInt(String key) => _preferenceCache[key];
+  int? getInt(String key) => _preferenceCache[key] as int?;
 
   /// Reads a value from persistent storage, throwing an exception if it's not a
   /// double.
-  double getDouble(String key) => _preferenceCache[key];
+  double? getDouble(String key) => _preferenceCache[key] as double?;
 
   /// Reads a value from persistent storage, throwing an exception if it's not a
   /// String.
-  String getString(String key) => _preferenceCache[key];
+  String? getString(String key) => _preferenceCache[key] as String?;
 
   /// Reads a set of string values from persistent storage, throwing an
   /// exception if it's not a string set.
   // Make a copy of the list so that later mutations won't propagate
-  List<String> getStringList(String key) => (_preferenceCache[key] is List<String>) ? (_preferenceCache[key] as List<String>).toList() : null;
+  List<String>? getStringList(String key) => (_preferenceCache[key] is List<String>) ? (_preferenceCache[key] as List<String>).toList() : null;
 
 
 
@@ -128,7 +128,7 @@ class SharedPreferences {
 
 
   /// Completes with true once the user preferences for the app has been cleared.
-  Future<bool> clear() {
+  Future<bool?> clear() {
     _preferenceCache.clear();
     return _store.clear(filename);
   }
@@ -140,7 +140,7 @@ class SharedPreferences {
   /// Use this method to observe modifications that were made in native code
   /// (without using the plugin) while the app is running.
   Future<void> reload() async {
-    final Map<String, Object> preferences = await _store.getAll(filename);
+    final Map<String, Object> preferences = await (_store.getAll(filename) as Future<Map<String, Object>>);
     _preferenceCache.clear();
     _preferenceCache.addAll(preferences);
   }
